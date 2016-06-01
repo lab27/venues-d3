@@ -38,7 +38,13 @@ background: $talk-dark;
     margin: 0 auto;
     position: relative;
 }
-
+#server-circle-holder {
+	position: relative;
+	#server-circle {
+		position: absolute;
+		border: none;
+	}
+}
 .panel-circle {
     width: 160px;
     height: 160px;
@@ -52,7 +58,6 @@ background: $talk-dark;
     	border: 6px solid #3adb76;
     }
 }
-
 
 
 .start-btn {

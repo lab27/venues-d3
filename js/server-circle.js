@@ -1,17 +1,36 @@
 var svgHeight = 160,
-        svgWidth = 160;
+    svgWidth = 160;
 
-    var svg = d3.select('#server-circle').append('svg')
+   d3.select('#server-circle-holder').append('svg')
         .attr({
                 
                 width: svgWidth,
                 height: svgHeight,
-                fill: 'purple',
-                'opacity':.6,
-                'stroke-width': 10,
-                'stroke-opacity': 1,
-                stroke: 'orange'
+                
            }).append("circle")
-                         .attr("cx", 30)
-                          .attr("cy", 30)
-                         .attr("r", 20);;
+                 .attr({
+                 	"cx": 80,
+                 	"cy": 80,
+                 	"r": 76,
+                 	fill: "none",
+	                'opacity':1,
+	                'stroke-width': 6,
+	                'stroke-opacity': 1,
+	                stroke: 'black'
+             });
+
+    d3.select('#server-circle-holder svg').append("circle")
+                 .attr({
+                 	"cx": 80,
+                 	"cy": 80,
+                 	"r": 76,
+                 	fill: "none",
+	                'opacity':1,
+	                'stroke-width': 6,
+	                'stroke-opacity': 1,
+	                stroke: '#54c6c6',
+	                'stroke-dasharray': '300,60'
+
+             })
+
+                 
