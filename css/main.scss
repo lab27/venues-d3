@@ -13,6 +13,11 @@
 html, body {
 background: $talk-dark;
 }
+path {
+  fill: none;
+  stroke: $vr-light-blue;
+  stroke-width: 6px;
+}
 
 .panel {
 	widows: 200px;
@@ -43,29 +48,52 @@ background: $talk-dark;
 	#server-circle {
 		position: absolute;
 		border: none;
+		padding: 0;
+		svg {
+			position: absolute;
+			width: 160px;
+			height: 160px;
+		}
 	}
 }
-.panel-circle {
+.panel-circle-holder {
     width: 160px;
     height: 160px;
-    border-radius: 80px;
-    border: 6px solid rgba(black, .3);
+    display:block;
+    // border-radius: 80px;
+    // border: 6px solid rgba(black, .3);
     box-sizing: border-box;
-    padding: 20px;
+    padding: 0;
     margin: 0 auto;
     transition: border .2s ease;
     &.success {
     	border: 6px solid #3adb76;
     }
+    svg {
+    	position: absolute;
+    	width: 160px;
+    	height: 160px;
+    	transform: rotate(-90deg);
+    	&.neutral-circle path{
+			stroke: rgba(black,.4);
+    	}
+    }
+
 }
 
 #broadcast-circle {
 	padding: 0;
 }
+#server-circle {
+	svg {
+
+	}
+}
 .start-btn {
     width: 108px;
     height: 108px;
-    background: #f82847;
+    margin: 27px;
+    background: $vr-light-blue;
     border-radius: 50%;
     position: absolute;
     border: 0;
