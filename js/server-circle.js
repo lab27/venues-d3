@@ -1,11 +1,11 @@
-var svgHeight = 160,
-    svgWidth = 160;
+// var svgHeight = 160,
+//     svgWidth = 160;
 
    d3.select('#server-circle-holder').append('svg')
         .attr({
                 
-                width: svgWidth,
-                height: svgHeight,
+                width: 160,
+                height: 160,
                 
            }).append("circle")
                  .attr({

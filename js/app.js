@@ -6,4 +6,5 @@ $(startBtn).on('click',function(){
 	$('#audioElement').trigger('play');
 	$('#broadcast-circle').addClass('success')
 	$(this).addClass('hide')
+	renderChart()
 });
