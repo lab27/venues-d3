@@ -8,3 +8,7 @@ $(startBtn).on('click',function(){
 	$(this).addClass('hide')
 	renderChart()
 });
+
+//height of ring:
+var ringWidth = $('.base-ring').outerWidth();
+$('.base-ring').css('height',ringWidth)
