@@ -1,2 +1,5 @@
- <svg class="neutral-circle" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 166"><path class="cls-1" d="M163,83.25a80,80,0,0,1-160,0C3,39.2,38.82,3,83,3S163,39.2,163,83.25Z"/></svg>
-      <svg id="server-circle-svg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 166"><path class="cls-1" d="M163,83.25a80,80,0,0,1-160,0C3,39.2,38.82,3,83,3S163,39.2,163,83.25Z"/></svg>
+<svg id="server-circle-svg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 168">
+	<path id="base" class="cls-1" d="M163,83.25a80,80,0,0,1-160,0C3,39.2,38.82,3,83,3S163,39.2,163,83.25Z"/>
+	<path id="overlay" stroke-dasharray="503,503" class="cls-1" d="M163,83.25a80,80,0,0,1-160,0C3,39.2,38.82,3,83,3S163,39.2,163,83.25Z"/>
+	<polyline id="check" class="cls-1" points="50.62 76.53 72.73 98.64 122.17 49.2"/>
+</svg>
