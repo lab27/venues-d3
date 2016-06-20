@@ -1,6 +1,6 @@
 var brdcst = $("#broadcast-circle");
 var pauseBtn = document.getElementsByClassName("pause");
-var startBtn = $('#start-talk');
+var startBtn = $('#logo');
 
 //colors: 
 var vrBlue 		= "#2c46b0",
@@ -12,9 +12,9 @@ var vrBlue 		= "#2c46b0",
 
 $(startBtn).on('click',function(){
 	$('#audioElement').trigger('play');
-	$('#broadcast-circle').addClass('success')
-	$(this).addClass('hide')
-	renderChart()
+	//$('#broadcast-circle').addClass('success')
+	//$(this).addClass('hide')
+	//renderChart()
 });
 
 //height of ring:
@@ -25,10 +25,68 @@ var sizeTheRings = function(){
 
 sizeTheRings()
 
+
 $(window).on('resize', function(){
 	console.log('resize windw')
 	sizeTheRings()
 });
+
+//Set up the messages:
+var msgBox = $('.messagebox')
+TweenMax.set(msgBox, {autoAlpha:0,marginTop:"100px"})
+
+//message counter
+var currentMsg = 0;
+var nextMsg = 1;
+
+//show the next msg
+var showNextMsg = function() {
+	console.log("show next message called")
+	//console.log("next msg: " + nextMsg.attr('id'))
+
+
+	var targetMsgBox = $('#messagebox'+currentMsg)
+	var nextMsgBox = $('#messagebox'+nextMsg)
+	console.log("target: " + targetMsgBox.attr('id'))
+	$(nextMsgBox).removeClass('hide')
+	//tl.play()
+	TweenMax.to(targetMsgBox,.5,{autoAlpha:0,ease:Power2.easeOut, onComplete:function(){
+		$(targetMsgBox).remove()
+		TweenMax.to(nextMsgBox,.5,{autoAlpha:1,marginTop:0,ease:Power2.easeOut, onComplete:function(){
+					nextMsg += 1
+		currentMsg += 1
+		}})
+	}})
+};
+
+//temp trigger with Logo
+$('#phone-save').on('click',function(){
+	$('#server-button').removeClass('hide').addClass('pulse')
+	showNextMsg()
+});
+
+
+
+//start server
+$('#server-button').on('click',function(){
+	TweenMax.to($(this),.5,{autoAlpha:0,scaleX:0,scaleY:0,ease:Power2.easeOut})
+	showNextMsg()
+	tl.play()
+})
+
+//launch device selector 
+$('#connection-button').on('click',function(){
+	TweenMax.to($(this),.2,{autoAlpha:0})
+	launchDeviceSelector()
+});
+
+$('.box-select').on('click',function(){
+	dstl.play()
+})
+
+$('.box2-select').on('click',function(){
+	dstl.play()
+})
 
 //TL max:
 var tmax_options = {
@@ -44,6 +102,7 @@ var tmax_options = {
   useFrames: false,
   onStart: function() {
     console.log('on start called');
+    showNextMsg();
   },
   onStartScope: {},
   onUpdate: function() {
@@ -70,6 +129,47 @@ var tmax_options = {
   onRepeatParams: []
 };
 
+var tmax_options2 = {
+  delay: 0,
+  paused: false,
+  onComplete: function() {
+    console.log('animation is complete');
+  },
+  onCompleteScope: {},
+  tweens: [],
+  stagger: 0,
+  align: 'normal',
+  useFrames: false,
+  onStart: function() {
+    console.log('on start called');
+    //showNextMsg();
+  },
+  onStartScope: {},
+  onUpdate: function() {
+    console.log('on update called');
+  },
+  onUpdateScope: {},
+  onRepeat: function() {
+    console.log('on repeat called');
+  },
+  onRepeatScope: {},
+  onReverseComplete: function() {
+    console.log('on reverse complete');
+  },
+  onReverseCompleteScope: {},
+  autoRemoveChildren: false,
+  smoothChildTiming: false,
+  repeat: 0,
+  repeatDelay: 0,
+  yoyo: false,
+  onCompleteParams: [],
+  onReverseCompleteParams: [],
+  onStartParams: [],
+  onUpdateParams: [],
+  onRepeatParams: []
+};
+
+
 var tl = new TimelineMax(tmax_options),
 				  serverCircle = $('#server path#overlay'),
 				  connectionCircle = $('#connection path#overlay'),
@@ -77,21 +177,69 @@ var tl = new TimelineMax(tmax_options),
 				  panelCircle = $('.panelbox svg')
 				  serverCheck = $('#server polyline#check'),
 				  connectionCheck = $('#connection polyline#check'),
-				  broadcastCheck = $('#broadcast polyline#check');
+				  connectionMeter = $('#connection-circle-svg circle'),
+				  broadcastCheck = $('#broadcast polyline#check'),
+				  serverBtn = $('#server-button'),
+				  connectionBtn = $('#connection-button'),
+				  broadcastBtn = $('#broadcast-button'),
+				  deviceSelectorLi = $('#devices ul li'),
+				  deviceSelectorUl = $('#devices ul'),
+				  devices = $('#devices'),
+				  dstl = new TimelineMax(tmax_options2);
 
 
 TweenMax.set(panelCircle,{scaleX: 0, scaleY: 0,autoAlpha: 0})
-TweenMax.set(serverCircle,{drawSVG: "0%",stroke:vrLtBlue})
+TweenMax.set(serverCircle,{drawSVG: "0%",transformOrigin: "50% 50%",stroke:vrLtBlue,rotation:-90})
 TweenMax.set($('polyline#check'),{drawSVG: "0%",stroke:vrGreen})
+TweenMax.set(deviceSelectorLi,{autoAlpha:0,paddingTop:"60px"})
+TweenMax.set(devices,{autoAlpha:0})
+TweenMax.set($('#screen2'),{x:"100%"})
+TweenMax.set($('svg circle'),{autoAlpha:0})
 
+//animate the device selector:
+var launchDeviceSelector = function(){
+
+TweenMax.set(deviceSelectorLi,{className:"-=hide"})
+TweenMax.set(devices,{className:"-=hide"})
+dstl.to(devices,.5,{autoAlpha:1})
+	.staggerTo(deviceSelectorLi,.5,{autoAlpha:1,paddingTop:0},.2)
+	.addPause()
+	.to($('#screen1'),.3,{x:"-100%",ease:Power2.easeOut, onComplete:function(){
+		$('#screen1').remove()
+	}})
+	.set($('#screen2'),{className:'-=hide'})
+	.to($('#screen2'),.3,{x:"0%",ease:Power2.easeOut})
+	.addPause()
+	.to(devices,.3,{y:"-150%",ease:Power2.easeOut, onComplete:function(){
+		tl.play()
+	}});
+}
 
 //TweenMax.staggerTo(panelCircle,1,{scaleX: 1, scaleY: 1, autoAlpha:1, ease: Power2.easeOut},.2)
 
 tl.staggerTo(panelCircle,1,{scaleX: 1, scaleY: 1, autoAlpha:1, ease: Power2.easeOut},.2)
-	.to(serverCircle,5,{drawSVG:"100%"})
+	.addPause()
+	.to(serverCircle,2,{drawSVG:"100%"})
+	.to(serverCircle,.5,{stroke:vrRed})
+	.set(serverBtn,{className:'-=hide',onComplete:showNextMsg})
+	.to(serverBtn,.5,{autoAlpha:1,scaleX:1,scaleY:1,ease:Power2.easeOut})
+	.addPause()
+	.set(serverCircle,{drawSVG:"0%",stroke:vrLtBlue})
+	.to(serverCircle,2,{drawSVG:"100%"})
 	.to(serverCircle,.5,{stroke:vrGreen})
-	.to(serverCheck,.2,{drawSVG:"100%", ease: Power2.easeOut});
+	.to(serverCheck,.2,{drawSVG:"100%", ease: Power2.easeOut,onComplete:function(){
+		showNextMsg()
+		$('#server-button').remove()
+	}})
+	.set(connectionBtn,{className:'-=hide'})
+	.set(connectionBtn,{className:'+=pulse'})
+	.addPause()
+	.to(connectionCircle,.2,{autoAlpha:1,stroke:vrGreen})
+	.to(connectionCheck,.2,{drawSVG:"100%", ease: Power2.easeOut,onComplete:function(){
+		showNextMsg()
+		$('#audioElement').trigger('play');
+		TweenMax.set(connectionMeter,{stroke:vrGreen,autoAlpha:.5,fill:"none"})
 
-	//.to(serverCircle,1,{stroke: vrGreen})
-	//.to(connectionCircle,1,{stroke: vrGreen})
-	//.to(braodcastCircle,1,{stroke:vrGreen});
+		renderChart()
+	}});
+

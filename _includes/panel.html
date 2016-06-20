@@ -1,6 +1,5 @@
-
-  <div class="small-4 columns panelbox" id="{{ include.name }}">
-    <div class="title-box"><H5>{{ include.name }}</H5></div>
-    <!-- <div class="base-ring"></div> -->
-{% include svg-circle.svg %}
-  </div>
+<div class="small-4 columns panelbox" id="{{ include.name }}">
+	<div class="title-box"><H5>{{ include.name }}</H5></div>
+	{% include svg-circle.svg %}
+	{% include button.html name=include.name text1=include.text text2=include.name %}
+</div>

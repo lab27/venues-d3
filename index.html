@@ -3,15 +3,20 @@ layout: default
 title: Venue of Me
 ---
 
-<audio id="audioElement" src="assets/daddy.m4a"></audio>
+<audio id="audioElement" src="assets/allen.mp3"></audio>
 <div class="row text-center">
-  {% include logo.svg %}
+  <div id="logo-holder">{% include logo-simple.svg %}</div>
   
 </div>
-<div class="row">
-  {% include panel.html name='server' %}
-  {% include panel.html name='connection' %}
-  {% include panel.html name='broadcast' %}
-
+<div class="row" id="panels">
+  {% include panel.html name='server' text='launch' %}
+  {% include panel.html name='connection' text='select' %}
+  {% include panel.html name='broadcast' text='start' %}
 
 </div>
+<div class="row" id="msg-center">
+    {% for post in site.data.messages %}
+    {% include messagebox.html %}
+    {% endfor %}
+</div>
+{% include devices.html %}

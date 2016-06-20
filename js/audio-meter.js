@@ -16,16 +16,10 @@
     var frequencyData = new Uint8Array(16);
 
 
-    var svgHeight = 148,
-        svgWidth = 148;
+    var svgHeight = 168,
+        svgWidth = 168;
 
-    var svg = d3.select('#broadcast-circle').append('svg')
-        .attr({
-            height: svgHeight,
-            width: svgWidth
-
-
-        });
+    var svg = d3.select('#connection-circle-svg')
 
     // continuously loop and update chart with frequency data.
     function renderChart() {
@@ -35,13 +29,13 @@
         analyser.getByteFrequencyData(frequencyData);
         //console.log(frequencyData)
         //var reducedData = frequencyData.slice(2,3);
-        //console.log(reducedData)
+        //console.log("fregData:" + frequencyData)
         var volume = frequencyData.reduce(function(sum,amp){
         return sum + amp
-        }, 0)
+        }, 0);
         volume = volume/16;
 
-        console.log("vol: " + volume);
+        //console.log("vol: " + volume);
 
         // scale things to fit
         var pow = d3.scale.pow()
@@ -71,7 +65,7 @@
                 'stroke-opacity': volume/100,
                 //'stroke-dasharray': volume/10,
                 //'stroke-dashoffset':volume,
-                stroke: "#3adb76"
+                stroke: "#d8f793"
            });
 
         circles.exit().remove(); 
