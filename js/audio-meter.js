@@ -19,11 +19,13 @@
     var svgHeight = 168,
         svgWidth = 168;
 
-    var svg = d3.select('#connection-circle-svg')
+    //var svg = d3.select('#connection-circle-svg')
 
     // continuously loop and update chart with frequency data.
-    function renderChart() {
-        requestAnimationFrame(renderChart);
+    function renderChart(el) {
+        //console.log("My element: "+ el + ", or my element: " + $(el))
+        var svg = d3.select(el)
+        requestAnimationFrame(function(){renderChart(el)});
 
         // copy frequency data to frequencyData array.
         analyser.getByteFrequencyData(frequencyData);

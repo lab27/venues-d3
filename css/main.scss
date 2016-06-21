@@ -93,11 +93,18 @@
 
     h3 {
         color: white;
+        text-transform: uppercase;
+        font-size: rem-calc(21);
+        line-height: rem-calc(30);
+        letter-spacing: rem-calc(1);
     }
     p.lead {
         color: $vr-beige;
         font-size: rem-calc(14);
         line-height: rem-calc(21);
+    }
+    .button svg {
+        margin-right: 12px;
     }
     .btn-yellow {
         border-color: $vr-yellow;
@@ -107,6 +114,9 @@
             color: white;
             background: $vr-light-blue;
         }
+    }
+    .faq-link {
+        margin-top: 24px;
     }
 }
 .panel-button {
@@ -126,6 +136,9 @@
     font-size: rem-calc(10);
     line-height: rem-calc(12);
     @include box-shadow(5px) 
+}
+#broadcast-button.warning {
+    color: $almost-black;
 }
 
 svg#logo {

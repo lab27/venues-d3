@@ -7,6 +7,7 @@ var vrBlue 		= "#2c46b0",
 	vrLtBlue 	= "#54c6c6",
 	vrRed 		= "#f82847",
 	vrGreen 	= "#d8f793",
+	vrYellow 	= "#ffed00",
 	vrPurple 	= "#a339cd",
 	vrBeige 	= "#fef1de";
 
@@ -60,7 +61,7 @@ var showNextMsg = function() {
 };
 
 //temp trigger with Logo
-$('#phone-save').on('click',function(){
+$('.msg-action').on('click',function(){
 	$('#server-button').removeClass('hide').addClass('pulse')
 	showNextMsg()
 });
@@ -88,6 +89,9 @@ $('.box2-select').on('click',function(){
 	dstl.play()
 })
 
+$('#broadcast-button').on('click',function(){
+	tl.play()
+})
 //TL max:
 var tmax_options = {
   delay: 0,
@@ -173,11 +177,12 @@ var tmax_options2 = {
 var tl = new TimelineMax(tmax_options),
 				  serverCircle = $('#server path#overlay'),
 				  connectionCircle = $('#connection path#overlay'),
-				  braodcastCircle = $('#broadcast path#overlay'),
+				  broadcastCircle = $('#broadcast path#overlay'),
 				  panelCircle = $('.panelbox svg')
 				  serverCheck = $('#server polyline#check'),
 				  connectionCheck = $('#connection polyline#check'),
 				  connectionMeter = $('#connection-circle-svg circle'),
+				  broadcastMeter = $('#broadcast-circle-svg circle'),
 				  broadcastCheck = $('#broadcast polyline#check'),
 				  serverBtn = $('#server-button'),
 				  connectionBtn = $('#connection-button'),
@@ -238,8 +243,20 @@ tl.staggerTo(panelCircle,1,{scaleX: 1, scaleY: 1, autoAlpha:1, ease: Power2.ease
 	.to(connectionCheck,.2,{drawSVG:"100%", ease: Power2.easeOut,onComplete:function(){
 		showNextMsg()
 		$('#audioElement').trigger('play');
-		TweenMax.set(connectionMeter,{stroke:vrGreen,autoAlpha:.5,fill:"none"})
-
-		renderChart()
+		TweenMax.set(connectionMeter,{stroke:vrGreen,autoAlpha:.5})
+		renderChart("#connection-circle-svg")
+	}})
+	.set(broadcastBtn,{className:"-=hide"})
+	.to(broadcastCircle,.5,{autoAlpha: 1, stroke:vrYellow},"+=5")
+	.set(broadcastBtn,{className:"-=success"})
+	.set(broadcastBtn,{className:"+=warning"})
+	.set(broadcastBtn,{className:"+=pulse"})
+	.addPause()
+	.to(broadcastCircle,.2,{stroke:vrGreen})
+	.to(broadcastCheck,.2,{drawSVG:"100%", ease: Power2.easeOut,onComplete:function(){
+		showNextMsg()
+		TweenMax.set(broadcastMeter,{stroke:vrGreen,autoAlpha:.5})
+		renderChart("#broadcast-circle-svg")
+		TweenMax.to(broadcastBtn,.2,{autoAlpha:0})
 	}});
 
