@@ -177,11 +177,22 @@ background: $talk-dark;
         fill:none;
         stroke-width: 6px;
         stroke: rgba($almost-black,.3)
+
     }
 
     path#overlay {
         stroke: rgba($almost-black, 0);
     }
+
+        line {
+            stroke: $talk-dark;
+        }
+
+ path#hub {
+    stroke:none;
+    fill:$talk-dark;
+ }
+
 
 
 

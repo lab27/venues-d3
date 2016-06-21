@@ -190,6 +190,8 @@ var tl = new TimelineMax(tmax_options),
 				  deviceSelectorLi = $('#devices ul li'),
 				  deviceSelectorUl = $('#devices ul'),
 				  devices = $('#devices'),
+				  spokes1 = $('#connection-circle-svg #spokes'),
+				  spokes2 = $('#broadcast-circle-svg #spokes'),
 				  dstl = new TimelineMax(tmax_options2);
 
 
@@ -201,6 +203,15 @@ TweenMax.set(devices,{autoAlpha:0})
 TweenMax.set($('#screen2'),{x:"100%"})
 TweenMax.set($('svg circle'),{autoAlpha:0})
 
+function turnSpokes1(){
+	//TweenMax.set(spokes,{rotation:0})
+	TweenMax.fromTo(spokes1,20,{transformOrigin:"50% 50%",rotation:0, ease: Power0.easeNone},{rotation:360, repeat:-1})
+}
+
+function turnSpokes2(){
+	//TweenMax.set(spokes,{rotation:0})
+	TweenMax.fromTo(spokes2,20,{transformOrigin:"50% 50%",rotation:0, ease: Power0.easeNone},{rotation:360, repeat:-1})
+}
 //animate the device selector:
 var launchDeviceSelector = function(){
 
@@ -244,19 +255,21 @@ tl.staggerTo(panelCircle,1,{scaleX: 1, scaleY: 1, autoAlpha:1, ease: Power2.ease
 		showNextMsg()
 		$('#audioElement').trigger('play');
 		TweenMax.set(connectionMeter,{stroke:vrGreen,autoAlpha:.5})
+		//turnSpokes1()
 		renderChart("#connection-circle-svg")
 	}})
 	.set(broadcastBtn,{className:"-=hide"})
 	.to(broadcastCircle,.5,{autoAlpha: 1, stroke:vrYellow},"+=5")
 	.set(broadcastBtn,{className:"-=success"})
 	.set(broadcastBtn,{className:"+=warning"})
-	.set(broadcastBtn,{className:"+=pulse"})
+	.set(broadcastBtn,{className:"+=pulse", onComplete:showNextMsg})
 	.addPause()
 	.to(broadcastCircle,.2,{stroke:vrGreen})
 	.to(broadcastCheck,.2,{drawSVG:"100%", ease: Power2.easeOut,onComplete:function(){
 		showNextMsg()
 		TweenMax.set(broadcastMeter,{stroke:vrGreen,autoAlpha:.5})
 		renderChart("#broadcast-circle-svg")
+		//turnSpokes2()
 		TweenMax.to(broadcastBtn,.2,{autoAlpha:0})
 	}});
 
