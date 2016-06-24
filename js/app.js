@@ -1,3 +1,5 @@
+
+
 var brdcst = $("#broadcast-circle");
 var pauseBtn = document.getElementsByClassName("pause");
 var startBtn = $('#logo');
@@ -195,7 +197,7 @@ var tl = new TimelineMax(tmax_options),
 				  dstl = new TimelineMax(tmax_options2);
 
 
-TweenMax.set(panelCircle,{scaleX: 0, scaleY: 0,autoAlpha: 0})
+TweenMax.set(panelCircle,{strokeWidth:0,autoAlpha: 0})
 TweenMax.set(serverCircle,{drawSVG: "0%",transformOrigin: "50% 50%",stroke:vrLtBlue,rotation:-90})
 TweenMax.set($('polyline#check'),{drawSVG: "0%",stroke:vrGreen})
 TweenMax.set(deviceSelectorLi,{autoAlpha:0,paddingTop:"60px"})
@@ -231,9 +233,14 @@ dstl.to(devices,.5,{autoAlpha:1})
 	}});
 }
 
+var checkCheck = function(){
+	setInterval(justChecking(), 1000)
+
+}
+
 //TweenMax.staggerTo(panelCircle,1,{scaleX: 1, scaleY: 1, autoAlpha:1, ease: Power2.easeOut},.2)
 
-tl.staggerTo(panelCircle,1,{scaleX: 1, scaleY: 1, autoAlpha:1, ease: Power2.easeOut},.2)
+tl.staggerTo(panelCircle,1,{strokeWidth:6, autoAlpha:1, ease: Power2.easeOut},.2)
 	.addPause()
 	.to(serverCircle,2,{drawSVG:"100%"})
 	.to(serverCircle,.5,{stroke:vrRed})
@@ -246,6 +253,8 @@ tl.staggerTo(panelCircle,1,{scaleX: 1, scaleY: 1, autoAlpha:1, ease: Power2.ease
 	.to(serverCheck,.2,{drawSVG:"100%", ease: Power2.easeOut,onComplete:function(){
 		showNextMsg()
 		$('#server-button').remove()
+		$('#stopwatch-server').removeClass('hide')
+		startTimer()
 	}})
 	.set(connectionBtn,{className:'-=hide'})
 	.set(connectionBtn,{className:'+=pulse'})
