@@ -55,7 +55,7 @@ var showNextMsg = function() {
 	//tl.play()
 	TweenMax.to(targetMsgBox,.5,{autoAlpha:0,ease:Power2.easeOut, onComplete:function(){
 		$(targetMsgBox).remove()
-		TweenMax.to(nextMsgBox,.5,{autoAlpha:1,marginTop:0,ease:Power2.easeOut, onComplete:function(){
+		TweenMax.to(nextMsgBox,.5,{autoAlpha:1,marginTop:"-30%",ease:Power2.easeOut, onComplete:function(){
 					nextMsg += 1
 		currentMsg += 1
 		}})
@@ -243,12 +243,12 @@ var checkCheck = function(){
 tl.staggerTo(panelCircle,1,{strokeWidth:6, autoAlpha:1, ease: Power2.easeOut},.2)
 	.addPause()
 	.to(serverCircle,2,{drawSVG:"100%"})
-	.to(serverCircle,.5,{stroke:vrRed})
-	.set(serverBtn,{className:'-=hide',onComplete:showNextMsg})
-	.to(serverBtn,.5,{autoAlpha:1,scaleX:1,scaleY:1,ease:Power2.easeOut})
-	.addPause()
-	.set(serverCircle,{drawSVG:"0%",stroke:vrLtBlue})
-	.to(serverCircle,2,{drawSVG:"100%"})
+	// .to(serverCircle,.5,{stroke:vrRed})
+	// .set(serverBtn,{className:'-=hide',onComplete:showNextMsg})
+	// .to(serverBtn,.5,{autoAlpha:1,scaleX:1,scaleY:1,ease:Power2.easeOut})
+	//.addPause()
+	//.set(serverCircle,{drawSVG:"0%",stroke:vrLtBlue})
+	//.to(serverCircle,2,{drawSVG:"100%"})
 	.to(serverCircle,.5,{stroke:vrGreen})
 	.to(serverCheck,.2,{drawSVG:"100%", ease: Power2.easeOut,onComplete:function(){
 		showNextMsg()

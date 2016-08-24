@@ -15,8 +15,11 @@
     font-style: normal;
 }
 
-@mixin box-shadow($blur) {
-    box-shadow: 0 1px $blur rgba($almost-black, .3);
+svg {
+    fill: currentColor;
+}
+@mixin box-shadow($blur, $opacity) {
+    box-shadow: 0 1px $blur rgba($almost-black, $opacity);
 }
 
 @keyframes pulse {
@@ -43,11 +46,48 @@ hr {
   margin: 6px;
 }
 
+#navbar {
+    background: $topbar-dark;
+    @include box-shadow(10px, .3);
+    max-height: 80px;
+
+}
+
+#back-arrow, #dropdown {
+    a {
+
+    color: white;
+    font-size: 24px;
+    &:hover {
+        color: $vr-light-blue;
+    }
+    }
+    padding: 22px;
+    svg {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+#dropdown .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: url(../assets/tubes.png) no-repeat 50% 50%;
+    background-size: cover;
+    border: 1px solid white;
+    @include box-shadow(2px, .3);
+    cursor: pointer;
+    &:hover {
+        @include box-shadow(10px,.5);
+        border: 1px solid $vr-light-blue;
+    }
+}
 
 #devices {
     text-align: center;
     background: $vr-purple;
-    @include box-shadow(20px);
+    @include box-shadow(20px,.3);
     // display: flex;
     // justify-content: center;
     // align-items: center;
@@ -93,6 +133,9 @@ hr {
     max-width: 45rem;
     margin-bottom: 60px;
 }
+#panels {
+    margin-top: 24px;
+}
 
 #msg-center {
     padding: 0;
@@ -100,7 +143,8 @@ hr {
     z-index: 999;
     .messagebox {
         padding: 24px;
-        background: $vr-purple;
+        // background: $vr-purple;
+        margin-top: -30%;
     }
 
 
@@ -157,7 +201,7 @@ hr {
     margin: 0 auto;
     font-size: rem-calc(10);
     line-height: rem-calc(12);
-    @include box-shadow(5px) 
+    @include box-shadow(5px, .3) 
 }
 #broadcast-button.warning {
     color: $almost-black;
@@ -292,8 +336,9 @@ background: $talk-dark;
 }
 
 #titlebar {
-    padding-top: 24px;
-    margin-bottom: 60px;
+    padding-top: 21px;
+    height: 80px;
+    // margin-bottom: 60px;
     .label {
         background: $topbar-dark;
         text-transform: uppercase;
@@ -306,10 +351,12 @@ background: $talk-dark;
         color: $vr-light-blue;
         margin-bottom: 0;
     }
-    p {
-        color: $vr-beige;
-        font-weight: 500;
-        font-size: rem-calc(12);
+    p#venue-title {
+        color: white;
+        font-weight: 300;
+        font-size: rem-calc(21);
+        text-transform: uppercase;
+        letter-spacing: rem-calc(2);
     }
     .talk-label {
         text-transform: uppercase;
