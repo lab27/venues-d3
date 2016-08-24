@@ -28,7 +28,9 @@
     transform: scale(.9);
   }
 }
-
+hr {
+    border-color: $vr-beige;
+}
 .pulse {
   animation-duration: 1s;
   animation-name: pulse;
@@ -83,13 +85,19 @@
         height: 60px;
     }
 }
-
+.accordion {
+    background: none;
+    border: none;
+}
 #panels, #msg-center {
     max-width: 45rem;
+    margin-bottom: 60px;
 }
 
 #msg-center {
     padding: 0;
+    position: relative;
+    z-index: 999;
     .messagebox {
         padding: 24px;
         background: $vr-purple;
@@ -281,4 +289,31 @@ background: $talk-dark;
     outline: 0;
     color: white;
     box-shadow: 0 1px 5px rgba(black,.3)
+}
+
+#titlebar {
+    padding-top: 24px;
+    margin-bottom: 60px;
+    .label {
+        background: $topbar-dark;
+        text-transform: uppercase;
+        letter-spacing: rem-calc(1);
+        color: $oil;
+        font-size: rem-calc(10);
+        margin: 0;
+    }
+    h3 {
+        color: $vr-light-blue;
+        margin-bottom: 0;
+    }
+    p {
+        color: $vr-beige;
+        font-weight: 500;
+        font-size: rem-calc(12);
+    }
+    .talk-label {
+        text-transform: uppercase;
+        color: $oil;
+        letter-spacing: rem-calc(1)
+    }
 }

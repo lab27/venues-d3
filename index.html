@@ -1,11 +1,17 @@
 ---
 layout: default
-title: Venue of Me
+title: Venue of Nick Niles
+talk: Teaching An Old Dog New Tricks
 ---
 
 <audio id="audioElement" src="assets/daddy.m4a"></audio>
 <div class="row text-center">
-  <div id="logo-holder">{% include logo-simple.svg %}</div>
+  <!-- <div id="logo-holder">{% include logo-simple.svg %}</div> -->
+  <div id="titlebar">
+  	<!-- <p class="label">venue</p> -->
+  	<h3>{{page.title}}</h3>
+  	<p class="talk-title"><span class="talk-label">next talk: </span>{{page.talk}}</p>
+  </div>
   
 </div>
 <div class="row" id="panels">
