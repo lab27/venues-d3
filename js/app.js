@@ -1,10 +1,18 @@
 
 
-var brdcst = $("#broadcast-circle");
+var brdcst = $("#stream-circle");
 var pauseBtn = document.getElementsByClassName("pause");
 var startBtn = $('#logo');
 var panelSize = $('.panelbox').outerWidth();
 var serverCirclePos = $('#server-circle-svg').offset()
+var listOpen = false
+
+//Spotlight
+var sl = [{left: "50%", top: "30px", diameter: 300, msg:"This is the name of your stage."},
+		{left: "24px", top: "24px", diameter: 150, msg: "See all your stages."}];
+
+//slCounter 
+var slCounter = -1;
 
 //colors: 
 var vrBlue 		= "#2c46b0",
@@ -17,14 +25,10 @@ var vrBlue 		= "#2c46b0",
 
 $(startBtn).on('click',function(){
 	$('#audioElement').trigger('play');
-	//$('#broadcast-circle').addClass('success')
+	//$('#stream-circle').addClass('success')
 	//$(this).addClass('hide')
 	//renderChart()
 });
-
-var moveSpotlight = function(){
-
-}
 
 
 
@@ -57,7 +61,7 @@ var showNextMsg = function() {
 	//tl.play()
 	TweenMax.to(targetMsgBox,.5,{autoAlpha:0,ease:Power2.easeOut, onComplete:function(){
 		$(targetMsgBox).remove()
-		TweenMax.to(nextMsgBox,.5,{autoAlpha:1,marginTop:"-30%",ease:Power2.easeOut, onComplete:function(){
+		TweenMax.to(nextMsgBox,.5,{autoAlpha:1,marginTop:"0%",ease:Power2.easeOut, onComplete:function(){
 					nextMsg += 1
 		currentMsg += 1
 		}})
@@ -65,7 +69,7 @@ var showNextMsg = function() {
 };
 
 //temp trigger with Logo
-$('.msg-action').on('click',function(){
+$('.avatar').on('click',function(){
 	$('#server-button').removeClass('hide').addClass('pulse')
 	showNextMsg()
 });
@@ -75,12 +79,12 @@ $('.msg-action').on('click',function(){
 //start server
 $('#server-button').on('click',function(){
 	TweenMax.to($(this),.5,{autoAlpha:0,scaleX:0,scaleY:0,ease:Power2.easeOut})
-	showNextMsg()
+	//showNextMsg()
 	tl.play()
 })
 
 //launch device selector 
-$('#connection-button').on('click',function(){
+$('#source-button').on('click',function(){
 	TweenMax.to($(this),.2,{autoAlpha:0})
 	launchDeviceSelector()
 });
@@ -93,7 +97,7 @@ $('.box2-select').on('click',function(){
 	dstl.play()
 })
 
-$('#broadcast-button').on('click',function(){
+$('#stream-button').on('click',function(){
 	tl.play()
 })
 //TL max:
@@ -180,36 +184,53 @@ var tmax_options2 = {
 var listToggle = new TimelineMax(tmax_options),
 				listBox = $('#talkbar');
 
-listToggle.toFrom(listBox,.3,{height: "60px"},{height:"100vh"})
+//listToggle.fromTo(listBox,.3,{height: "100vh"},{height:"60px"})
 
 $('#list-toggle').on('click', function(){
-	$(this).toggleClass('list-open')
+	if (listOpen == false) {
+	//open the list
+	TweenMax.to(listBox,.3,{height:"100vh",ease:Power2.easeOut,onComplete:function(){
+		listOpen = true
+	}})
+	} else {
+		//close the list
+	TweenMax.to(listBox,.3,{height:"60px",ease:Power2.easeOut,onComplete:function(){
+		listOpen = false
+	}})
+	}
+})
+
+$('.list-open').on('click',function(){
+	//close the list
+	console('close this list!')
+	TweenMax.to(listBox,.3,{height:"60px",ease:Power2.easeOut})
 })
 
 var tl = new TimelineMax(tmax_options),
 				  serverCircle = $('#server path#overlay'),
 				  spotlight = $('#spotlight'),
-				  connectionCircle = $('#connection path#overlay'),
-				  broadcastCircle = $('#broadcast path#overlay'),
+				  spotlightMsg = $('#spotlight-msg'),
+				  connectionCircle = $('#source path#overlay'),
+				  broadcastCircle = $('#stream path#overlay'),
 				  panelCircle = $('.panelbox svg')
 				  serverCheck = $('#server polyline#check'),
-				  connectionCheck = $('#connection polyline#check'),
-				  connectionMeter = $('#connection-circle-svg circle'),
-				  broadcastMeter = $('#broadcast-circle-svg circle'),
-				  broadcastCheck = $('#broadcast polyline#check'),
+				  connectionCheck = $('#source polyline#check'),
+				  connectionMeter = $('#source-circle-svg circle'),
+				  broadcastMeter = $('#stream-circle-svg circle'),
+				  broadcastCheck = $('#stream polyline#check'),
 				  serverBtn = $('#server-button'),
-				  connectionBtn = $('#connection-button'),
-				  broadcastBtn = $('#broadcast-button'),
+				  connectionBtn = $('#source-button'),
+				  broadcastBtn = $('#stream-button'),
 				  deviceSelectorLi = $('#devices ul li'),
 				  deviceSelectorUl = $('#devices ul'),
 				  devices = $('#devices'),
-				  spokes1 = $('#connection-circle-svg #spokes'),
-				  spokes2 = $('#broadcast-circle-svg #spokes'),
+				  spokes1 = $('#source-circle-svg #spokes'),
+				  spokes2 = $('#stream-circle-svg #spokes'),
 				  dstl = new TimelineMax(tmax_options2);
 
 
 TweenMax.set(panelCircle,{strokeWidth:0,autoAlpha: 0})
-TweenMax.set(serverCircle,{drawSVG: "0%",transformOrigin: "50% 50%",stroke:vrLtBlue,rotation:-90})
+TweenMax.set(serverCircle,{drawSVG: "0%",transformOrigin: "50% 50%", svgOrigin: "83 83",stroke:vrLtBlue,rotation:-90})
 TweenMax.set($('polyline#check'),{drawSVG: "0%",stroke:vrGreen})
 TweenMax.set(deviceSelectorLi,{autoAlpha:0,paddingTop:"60px"})
 TweenMax.set(devices,{autoAlpha:0})
@@ -244,26 +265,54 @@ dstl.to(devices,.5,{autoAlpha:1})
 	}});
 }
 
+spotlightTl = new TimelineMax(tmax_options);
+
+
+
+//Spotlight Timeline:
+var showSpotlight = function(o) {
+
+	console.log("object: " + JSON.stringify(o))
+	o.width=o.diameter;
+	o.height=o.diameter;
+	o.marginLeft = (-1*(o.diameter/2))
+	o.marginTop = (-1*(o.diameter/2))
+	msg = o.msg
+	o.onComplete = function(){
+		$('#spotlight-msg p').html(msg)
+	}
+	TweenMax.to($("#spotlight"),.2,o);
+	TweenMax.to(spotlightMsg,.2,{top: o.top,left:o.left})
+}
+
+var nextSpotlight = function(){
+	slCounter ++;
+	showSpotlight(sl[slCounter])
+}
+
+
+
 var checkCheck = function(){
 	setInterval(justChecking(), 1000)
 
 }
 
+//go to next spotlight 
+$('.spotlight-btn').on('click',nextSpotlight);
 
 
 //TweenMax.staggerTo(panelCircle,1,{scaleX: 1, scaleY: 1, autoAlpha:1, ease: Power2.easeOut},.2)
 
 tl
-	.staggerTo(panelCircle,1,{strokeWidth:6, autoAlpha:1, ease: Power2.easeOut},.2)
-	.set(spotlight,{top: $('#server-circle-svg').offset().top, left:$('#server-circle-svg').offset().left, width: panelSize, height:panelSize, borderRadius: panelSize})
+	.staggerTo(panelCircle,1,{strokeWidth:5, autoAlpha:1, ease: Power2.easeOut},.2)
 	.addPause()
-	.to(serverCircle,2,{drawSVG:"100%"})
+	//.to(serverCircle,2,{drawSVG:"100%"})
 	// .to(serverCircle,.5,{stroke:vrRed})
 	// .set(serverBtn,{className:'-=hide',onComplete:showNextMsg})
 	// .to(serverBtn,.5,{autoAlpha:1,scaleX:1,scaleY:1,ease:Power2.easeOut})
 	//.addPause()
 	//.set(serverCircle,{drawSVG:"0%",stroke:vrLtBlue})
-	//.to(serverCircle,2,{drawSVG:"100%"})
+	.to(serverCircle,2,{drawSVG:"100%"})
 	.to(serverCircle,.5,{stroke:vrGreen,onComplete:showNextMsg})
 	.to(serverCheck,.2,{drawSVG:"100%", ease: Power2.easeOut,onComplete:function(){
 		showNextMsg()
@@ -280,19 +329,19 @@ tl
 		$('#audioElement').trigger('play');
 		TweenMax.set(connectionMeter,{stroke:vrGreen,autoAlpha:.5})
 		//turnSpokes1()
-		renderChart("#connection-circle-svg")
+		renderChart("#source-circle-svg")
 	}})
 	.set(broadcastBtn,{className:"-=hide"})
 	.to(broadcastCircle,.5,{autoAlpha: 1, stroke:vrYellow},"+=5")
 	.set(broadcastBtn,{className:"-=success"})
 	.set(broadcastBtn,{className:"+=warning"})
-	.set(broadcastBtn,{className:"+=pulse", onComplete:showNextMsg})
+	.set(broadcastBtn,{className:"+=pulse"})
 	.addPause()
 	.to(broadcastCircle,.2,{stroke:vrGreen})
 	.to(broadcastCheck,.2,{drawSVG:"100%", ease: Power2.easeOut,onComplete:function(){
 		showNextMsg()
 		TweenMax.set(broadcastMeter,{stroke:vrGreen,autoAlpha:.5})
-		renderChart("#broadcast-circle-svg")
+		renderChart("#stream-circle-svg")
 		//turnSpokes2()
 		TweenMax.to(broadcastBtn,.2,{autoAlpha:0})
 	}});

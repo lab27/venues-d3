@@ -41,10 +41,33 @@ svg {
     position: absolute;
   left: 50px;
   top: 50px;
-  width: 0;
-  height: 0;
-  border-radius: 100px;  
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.5) inset, 0px 0px 0px 2000px rgba($vr-blue,0.8)
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;  
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.5) inset, 0px 0px 0px 2000px rgba($vr-blue,0.8);
+    z-index: 1000;
+}
+
+#spotlight-msg {
+    background: $vr-beige;
+    position: absolute;
+    z-index: 1200;
+    padding: 12px;
+    border-radius: 4px;
+    @include box-shadow(5px, .3);
+    margin-top: 24px;
+    margin-left:24px;
+    p {
+        margin: 0;
+        color: $talk-dark;
+    }
+
+    .spotlight-btn {
+        margin: 0;
+        margin-left:12px;
+
+    }
+
 }
 
 @keyframes pulse {
@@ -96,18 +119,22 @@ hr {
     }
 }
 
+#dropdown {
+    padding-top: 20px;
+}
+
 #list-toggle {
     padding: 12px 24px;
-    text-align: right;
 }
 #talkbar {
     background: #f9f9f9;
-    border-bottom: 1px solid $silver;
-    position: relative;
+    border-bottom: 1px solid #ddd;
+    position: absolute;
     z-index: 800;
     height: 60px;
     overflow: hidden;
     width: 100%;
+    margin-top: 0px
 }
 
 #titlerow {
@@ -121,7 +148,7 @@ hr {
 }
 
 .talkitem {
-    padding: 6px 12px;
+    padding: 6px 24px;
     border-bottom: 1px solid $charcoal;
     p {
         margin: 0;
@@ -153,7 +180,7 @@ hr {
     color: white;
     padding: 24px;
     position: fixed;
-    top: 24px;
+    top: 220px;
     left:24px;
     right: 24px;
    // bottom: 24px;
@@ -188,14 +215,24 @@ hr {
     background: none;
     border: none;
 }
-#panels, #msg-center {
+#msg-center {
     max-width: 35rem;
-    margin-bottom: 60px;
+    // margin-bottom: 60px;
+}
+#controls {
+    position: absolute;
+    top: 0;
+    left:0;
+    right: 0;
+    bottom: 0;
+    padding-top: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 #panels {
-    margin-top: 24px;
+    flex: 0 0 80vw
 }
-
 #msg-center {
     padding: 0;
     position: relative;
@@ -204,7 +241,7 @@ hr {
     .messagebox {
         padding: 24px;
         // background: $vr-purple;
-        margin-top: -30%;
+        // margin-top: -30%;
     }
 
 
@@ -247,7 +284,7 @@ hr {
 }
 .panel-button {
     position: absolute;
-    top: 32px;
+    top: 40px;
     right: 14px;
     left: 12px;
     bottom: 20px;
@@ -259,7 +296,7 @@ hr {
     -ms-flex-align: center;
         align-items: center;
     margin: 0 auto;
-    font-size: rem-calc(10);
+    font-size: rem-calc(14);
     line-height: rem-calc(12);
     @include box-shadow(5px, .3) 
 }
@@ -307,7 +344,7 @@ background: $bgColor;
     }
     svg {
         fill:none;
-        stroke-width: 6px;
+        stroke-width: 5px;
         stroke: $neutralColor;
 
     }
@@ -433,8 +470,36 @@ background: $bgColor;
 }
 
 #talk-titlebar {
-    padding-top: 18px;
+    padding: 18px 24px 0 0;
+
     p {
         color: $oil
     }
+    .next-talk {
+        font-weight: 200;
+        color: $charcoal
+    }
 }
+    .talkitem {
+        p {
+            color: $oil;
+            .time {
+                font-weight: 200;
+                color: $charcoal;
+                min-width: 160px;
+                display: inline-block;
+            }
+            .title {
+                padding-left: 12px;
+            }
+            &.header {
+                font-weight: 500;
+                .time {
+                    font-weight: 500
+                }
+            }
+        }
+        &.header {
+            border-color: #bbb
+        }
+    }
