@@ -3,6 +3,8 @@
 var brdcst = $("#broadcast-circle");
 var pauseBtn = document.getElementsByClassName("pause");
 var startBtn = $('#logo');
+var panelSize = $('.panelbox').outerWidth();
+var serverCirclePos = $('#server-circle-svg').offset()
 
 //colors: 
 var vrBlue 		= "#2c46b0",
@@ -20,18 +22,18 @@ $(startBtn).on('click',function(){
 	//renderChart()
 });
 
-//height of ring:
-var sizeTheRings = function(){
-	var ringWidth = $('.base-ring').outerWidth();
-	$('.base-ring').css('height',ringWidth)
+var moveSpotlight = function(){
+
 }
 
-sizeTheRings()
+
 
 
 $(window).on('resize', function(){
-	console.log('resize windw')
-	sizeTheRings()
+	//console.log('resize windw')
+	panelSize = $('.panelbox').outerWidth();
+	console.log('panelSize: '+panelSize)
+
 });
 
 //Set up the messages:
@@ -175,9 +177,18 @@ var tmax_options2 = {
   onRepeatParams: []
 };
 
+var listToggle = new TimelineMax(tmax_options),
+				listBox = $('#talkbar');
+
+listToggle.toFrom(listBox,.3,{height: "60px"},{height:"100vh"})
+
+$('#list-toggle').on('click', function(){
+	$(this).toggleClass('list-open')
+})
 
 var tl = new TimelineMax(tmax_options),
 				  serverCircle = $('#server path#overlay'),
+				  spotlight = $('#spotlight'),
 				  connectionCircle = $('#connection path#overlay'),
 				  broadcastCircle = $('#broadcast path#overlay'),
 				  panelCircle = $('.panelbox svg')
@@ -238,9 +249,13 @@ var checkCheck = function(){
 
 }
 
+
+
 //TweenMax.staggerTo(panelCircle,1,{scaleX: 1, scaleY: 1, autoAlpha:1, ease: Power2.easeOut},.2)
 
-tl.staggerTo(panelCircle,1,{strokeWidth:6, autoAlpha:1, ease: Power2.easeOut},.2)
+tl
+	.staggerTo(panelCircle,1,{strokeWidth:6, autoAlpha:1, ease: Power2.easeOut},.2)
+	.set(spotlight,{top: $('#server-circle-svg').offset().top, left:$('#server-circle-svg').offset().left, width: panelSize, height:panelSize, borderRadius: panelSize})
 	.addPause()
 	.to(serverCircle,2,{drawSVG:"100%"})
 	// .to(serverCircle,.5,{stroke:vrRed})
@@ -249,7 +264,7 @@ tl.staggerTo(panelCircle,1,{strokeWidth:6, autoAlpha:1, ease: Power2.easeOut},.2
 	//.addPause()
 	//.set(serverCircle,{drawSVG:"0%",stroke:vrLtBlue})
 	//.to(serverCircle,2,{drawSVG:"100%"})
-	.to(serverCircle,.5,{stroke:vrGreen})
+	.to(serverCircle,.5,{stroke:vrGreen,onComplete:showNextMsg})
 	.to(serverCheck,.2,{drawSVG:"100%", ease: Power2.easeOut,onComplete:function(){
 		showNextMsg()
 		$('#server-button').remove()
@@ -281,4 +296,10 @@ tl.staggerTo(panelCircle,1,{strokeWidth:6, autoAlpha:1, ease: Power2.easeOut},.2
 		//turnSpokes2()
 		TweenMax.to(broadcastBtn,.2,{autoAlpha:0})
 	}});
+
+	$(document).ready(function(){
+		$('.svg-circle').attr("class", "svg-circle");
+		tl.play()
+
+	})
 

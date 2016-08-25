@@ -1,0 +1,21 @@
+<div class="row expanded" id="talkbar">
+
+  <div class="row clearfix" id="titlerow">
+  <div class="small-10 columns text-center" id="talk-titlebar">
+      <p id="current-talk-title">Gorgeous Metal Steering Wheel</p>
+    </div>
+    <div class="small-1 columns" id="list-toggle">
+    <a href="#">{% include svg_icon.svg name='list'%}</a>
+    </div>
+    </div>
+    <div class="row clearfix" id="listrow">
+    	{% for talk in site.data.talks %}
+	<div class="small-12 columns talkitem">
+		<p>
+			{{talk.title}}
+			{{talk.time}}
+		</p>
+	</div>
+{% endfor %}
+    </div>
+</div>

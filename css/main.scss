@@ -7,6 +7,10 @@
 @import 'buttons';
 @import 'animate';
 
+//vars:
+$bgColor: #eee;
+$neutralColor: $charcoal;
+
 @font-face {
     font-family: 'Eagle';
     src: url('../assets/fonts/Eagle-Book.eot?-u70zge');
@@ -20,6 +24,27 @@ svg {
 }
 @mixin box-shadow($blur, $opacity) {
     box-shadow: 0 1px $blur rgba($almost-black, $opacity);
+}
+
+#darkout {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba($vr-blue,.8);
+    z-index: 0;
+}
+
+#spotlight {
+    position: absolute;
+  left: 50px;
+  top: 50px;
+  width: 0;
+  height: 0;
+  border-radius: 100px;  
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.5) inset, 0px 0px 0px 2000px rgba($vr-blue,0.8)
 }
 
 @keyframes pulse {
@@ -47,25 +72,59 @@ hr {
 }
 
 #navbar {
-    background: $topbar-dark;
-    @include box-shadow(10px, .3);
+    background: #fff;
+    @include box-shadow(3px, .3);
     max-height: 80px;
-
+    position: relative;
+    z-index: 900;
+    color: $topbar-dark
 }
 
-#back-arrow, #dropdown {
+#back-arrow, #dropdown, #list-toggle {
     a {
 
-    color: white;
+    color: $topbar-dark;
     font-size: 24px;
     &:hover {
         color: $vr-light-blue;
     }
     }
-    padding: 22px;
+    padding: 24px;
     svg {
-        width: 36px;
-        height: 36px;
+        width: 24px;
+        height: 24px;
+    }
+}
+
+#list-toggle {
+    padding: 12px 24px;
+    text-align: right;
+}
+#talkbar {
+    background: #f9f9f9;
+    border-bottom: 1px solid $silver;
+    position: relative;
+    z-index: 800;
+    height: 60px;
+    overflow: hidden;
+    width: 100%;
+}
+
+#titlerow {
+    height: 60px;
+    border-bottom: 1px solid $steel
+}
+
+#listrow, #titlerow {
+    max-width: 100%;
+    margin: 0;
+}
+
+.talkitem {
+    padding: 6px 12px;
+    border-bottom: 1px solid $charcoal;
+    p {
+        margin: 0;
     }
 }
 
@@ -79,8 +138,8 @@ hr {
     @include box-shadow(2px, .3);
     cursor: pointer;
     &:hover {
-        @include box-shadow(10px,.5);
-        border: 1px solid $vr-light-blue;
+        @include box-shadow(3px,.5);
+        // border: 1px solid $vr-light-blue;
     }
 }
 
@@ -130,7 +189,7 @@ hr {
     border: none;
 }
 #panels, #msg-center {
-    max-width: 45rem;
+    max-width: 35rem;
     margin-bottom: 60px;
 }
 #panels {
@@ -141,6 +200,7 @@ hr {
     padding: 0;
     position: relative;
     z-index: 999;
+    max-width: 30em;
     .messagebox {
         padding: 24px;
         // background: $vr-purple;
@@ -215,7 +275,7 @@ svg#logo {
 }
 
 html, body {
-background: $talk-dark;
+background: $bgColor;
 }
 // path {
 //   fill: none;
@@ -238,11 +298,17 @@ background: $talk-dark;
         text-align: center;
         margin-bottom: 6px;
         text-transform: uppercase;
+        width: auto;
+        background: $neutralColor;
+        padding: 3px 7px;
+        position: relative;
+        display: inline-block;
+        border-radius: 2px;
     }
     svg {
         fill:none;
         stroke-width: 6px;
-        stroke: rgba($almost-black,.3)
+        stroke: $neutralColor;
 
     }
 
@@ -251,12 +317,12 @@ background: $talk-dark;
     }
 
         line {
-            stroke: $talk-dark;
+            stroke: $bgColor;
         }
 
  path#hub {
     stroke:none;
-    fill:$talk-dark;
+    fill:$bgColor;
  }
 
 
@@ -352,15 +418,23 @@ background: $talk-dark;
         margin-bottom: 0;
     }
     p#venue-title {
-        color: white;
+        color: $topbar-dark;
         font-weight: 300;
         font-size: rem-calc(21);
         text-transform: uppercase;
         letter-spacing: rem-calc(2);
+        font-family: $header-font-family;
     }
     .talk-label {
         text-transform: uppercase;
         color: $oil;
         letter-spacing: rem-calc(1)
+    }
+}
+
+#talk-titlebar {
+    padding-top: 18px;
+    p {
+        color: $oil
     }
 }

@@ -1,24 +1,22 @@
 ---
 layout: default
-title: Venue of Nick Niles
+title: Stage of Nick Niles
 talk: Teaching An Old Dog New Tricks
 ---
 <audio id="audioElement" src="assets/daddy.m4a"></audio>
-<div class="row expanded" id="navbar">
-<div class="small-1 columns" id="back-arrow"><a href="venues.html">{% include svg_icon.svg name='arrow-left'%}</a></div>
-<div class="small-10 columns text-center" id="titlebar">
-  <p id="venue-title">{{page.title}}</p>
-</div>
-<div class="small-1 columns" id="dropdown"><div class="avatar"></div></div>
-</div>
+
+{% include navbar.html %}
+{% include talkbar.html %}
+
 <div class="row" id="panels">
 {% include panel.html name='server' text='launch' %}
 {% include panel.html name='connection' text='select' %}
 {% include panel.html name='broadcast' text='start' %}
 </div>
-<div class="row" id="msg-center">
-{% for post in site.data.messages %}
-  {% include messagebox.html %}
-{% endfor %}
+<!-- <div id="spotlight"></div> -->
+<!-- <div class="row" id="msg-center"> -->
+<!-- {% for post in site.data.messages %}
+{% include messagebox.html %}
+{% endfor %} -->
 </div>
 {% include devices.html %}
